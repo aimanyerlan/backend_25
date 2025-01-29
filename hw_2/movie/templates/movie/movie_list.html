@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Movie List</title>
+</head>
+<body>
+
+    <h2>Movie List</h2>
+    <a href="{% url 'movie-create' %}">Add New Movie</a>
+    <ul>
+        {% for movie in movies %}
+            <li>
+                <strong>{{ movie.title }}</strong> ({{ movie.duration }} sec)  
+                <br><em>Producer:</em> {{ movie.producer }}
+                <br>{{ movie.description }}
+            </li>
+        {% empty %}
+            <li>No movies available.</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

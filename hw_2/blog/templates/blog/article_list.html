@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Article List</title>
+</head>
+<body>
+
+    <h2>Article List</h2>
+    <a href="{% url 'article-create' %}">Add New Article</a>
+    <ul>
+        {% for article in articles %}
+            <li>
+                <strong>{{ article.title }}</strong>  
+                <br><em>Author:</em> {{ article.author }}
+                <br>{{ article.text|truncatewords:20 }}
+            </li>
+        {% empty %}
+            <li>No articles available.</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
