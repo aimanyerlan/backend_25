@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Movies List</title>
+</head>
+<body>
+    <h1>Movies</h1>
+    <ul>
+        {% for movie in movies %}
+            <li>
+                <a href="/movies/{{ movie.id }}/">{{ movie.title }}</a> - {{ movie.duration }} sec
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

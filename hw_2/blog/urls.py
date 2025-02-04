@@ -1,7 +1,8 @@
+# from django.contrib import admin
 from django.urls import path
-from .views import article_list, article_create
+from blog.views import index, article
 
 urlpatterns = [
-    path('', article_list, name='article-list'),
-    path('create/', article_create, name='article-create'),
+    path('', index, name='index'),
+    path('<int:article_id>/', article, name='article'),
 ]
