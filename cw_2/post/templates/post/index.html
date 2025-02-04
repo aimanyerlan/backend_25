@@ -12,7 +12,6 @@
             <div class="post-card">
                 <h2><a href="{% url 'post_detail' post.id %}" class="post-title">{{ post.title }}</a></h2>
                 <p><strong>Автор:</strong> {{ post.author }}</p>
-                {% comment %} <a href="{% url 'post_delete' post.id %}" class="btn btn-danger">Удалить</a> {% endcomment %}
             </div>
         {% empty %}
             <p>Постов пока нет.</p>
