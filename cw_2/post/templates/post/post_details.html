@@ -1,0 +1,16 @@
+{% extends 'post/base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <div class="post-detail">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <p class="post-author"><strong>Автор:</strong> {{ post.author }}</p>
+        <p class="post-description"><strong>Текст:</strong> {{ post.description }}</p>
+    </div>
+    
+    <div class="button-container">
+        <a href="{% url 'post_delete' post.id %}" class="btn btn-danger">Удалить</a>
+        <a href="{% url 'post_list' %}" class="btn btn-secondary">Назад</a>
+    </div>
+{% endblock %}
