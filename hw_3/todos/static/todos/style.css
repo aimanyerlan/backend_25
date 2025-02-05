@@ -1,0 +1,53 @@
+body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.todo-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.todo-card:hover {
+    transform: scale(1.05);
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.btn-custom {
+    background: #ff8c00;
+    border: none;
+    color: white;
+}
+
+.btn-custom:hover {
+    background: #e07b00;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.btn-danger {
+    background: #d00000;
+}
+
+.btn-danger:hover {
+    background: #a00000;
+}

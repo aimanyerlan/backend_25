@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить задачу</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'todos/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Добавить задачу</h2>
+        <div class="todo-form-container">
+            <form method="post">
+                {% csrf_token %}
+                <label for="id_title">Title:</label>
+                <input type="text" name="title" id="id_title" style="width: 100%;"><br>   
+
+                <label for="id_description">Description:</label>
+                <textarea name="description" id="id_description" style="width: 100%; height: 100px;"></textarea><br>
+
+                <label for="id_due_date">Due date:</label>
+                <input type="date" name="due_date" id="id_due_date" style="width: 100%;"><br>
+        
+                <label for="id_status">Status:</label>
+                <input type="checkbox" name="status" id="id_status"><br>
+        
+                <button type="submit" class="btn btn-custom w-100">💾 Сохранить</button>
+            </form>
+        </div>        
+        <div class="text-center mt-3">
+            <a href="{% url 'index' %}" class="btn btn-light">⬅ Назад</a>
+        </div>
+    </div>
+</body>
+</html>
