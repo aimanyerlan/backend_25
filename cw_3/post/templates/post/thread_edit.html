@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Edit Thread{% endblock %}
+{% block content %}
+<div class="container d-flex justify-content-center">
+    <div class="card p-4 shadow-lg" style="max-width: 600px; width: 100%; background-color: #FCF3E3; border-left: 5px solid #013D5A;">
+        <h2 class="text-center" style="color: #013D5A;">Edit Thread</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">Name:</label>
+                <input type="text" name="name" class="form-control" value="{{ form.name.value|default_if_none:'' }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" style="font-weight: bold;">Description:</label>
+                <textarea name="description" class="form-control">{{ form.description.value|default_if_none:'' }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

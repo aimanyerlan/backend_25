@@ -1,0 +1,41 @@
+
+body {
+    background-color: #FCF3E3;
+    color: #013D5A;
+    font-family: Arial, sans-serif;
+}
+.container {
+    max-width: 800px;
+}
+
+.navbar {
+    background-color: #013D5A;
+}
+
+.navbar a {
+    color: #FCF3E3 !important;
+}
+
+.card-header {
+    background-color: #BDD3CE;
+}
+
+.card {
+    background-color: #F8F9FA; 
+    border: 1px solid #708C69; 
+}
+
+.card-footer .btn-warning {
+    background-color: #FAA258; 
+    border-color: #FAA258;
+}
+
+.card-footer .btn-danger {
+    background-color: #013D5A; 
+    border-color: #013D5A;
+}
+
+.card-footer .btn-info {
+    background-color: #708C69; 
+    border-color: #708C69;
+}
