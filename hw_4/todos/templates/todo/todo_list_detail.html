@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Todo List Details{% endblock %}
+
+{% block content %}
+<h2>{{ todo_list.title }}</h2>
+<p>{{ todo_list.description }}</p>
+
+<!-- Список задач -->
+<h3>Tasks:</h3>
+<ul class="list-group">
+    {% for todo in todos %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ todo.title }}
+        <div>
+            <a href="{% url 'todo_edit' todo.id %}" class="btn btn-warning btn-sm">Edit</a>
+            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteTodoConfirmModal" onclick="setTodoDeleteUrl({{ todo.id }})">Delete</button>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- Кнопка вызова модального окна для добавления задачи -->
+<button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addTodoModal">Добавить задачу</button>
+
+<!-- 🔹 ВОССТАНОВЛЕННОЕ МОДАЛЬНОЕ ОКНО ДЛЯ ДОБАВЛЕНИЯ TODO -->
+<div class="modal fade" id="addTodoModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавить задачу</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно подтверждения удаления задачи -->
+<div class="modal fade" id="deleteTodoConfirmModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Подтверждение удаления</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Вы уверены, что хотите удалить эту задачу?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <a id="confirmTodoDeleteBtn" class="btn btn-danger">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Скрипты для установки URL удаления -->
+<script>
+    function setDeleteUrl(id) {
+        document.getElementById("confirmDeleteBtn").href = `/todo-lists/${id}/delete/`;
+    }
+
+    function setTodoDeleteUrl(id) {
+        document.getElementById("confirmTodoDeleteBtn").href = `/todos/${id}/delete/`;
+    }
+</script>
+
+{% endblock %}
