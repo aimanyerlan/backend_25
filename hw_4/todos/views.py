@@ -60,5 +60,8 @@ def todo_edit(request, id):
 
     return render(request, 'todo/todo_edit.html', {'form': form})
 
-
-    
+def todo_new_status(request, id):
+    todo = get_object_or_404(Todo, id=id)
+    todo.status = not todo.status
+    todo.save()
+    return redirect('todo_list_detail', id=todo.todo_list.id)

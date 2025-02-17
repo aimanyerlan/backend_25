@@ -1,11 +1,12 @@
-{% extends "base.html" %}
-{% block title %}Edit Task{% endblock %}
+{% extends 'base.html' %}
+{% block title %}Редактировать задачу{% endblock %}
 
 {% block content %}
-<h2>Edit Task</h2>
-<form method="post">
+<h2>Редактировать задачу</h2>
+<form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Save</button>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="{% url 'todo_list_detail' form.instance.todo_list.id %}" class="btn btn-secondary">Отмена</a>
 </form>
 {% endblock %}

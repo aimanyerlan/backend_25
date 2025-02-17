@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import todo_lists, todo_list_detail, todo_list_edit, todo_list_delete, todo_edit, todo_delete
+from .views import todo_lists, todo_list_detail, todo_list_edit, todo_list_delete, todo_edit, todo_delete, todo_new_status
 
 urlpatterns = [
     path('todo-lists/', todo_lists, name='todo_lists'),
@@ -8,6 +8,7 @@ urlpatterns = [
     path('todo-lists/<int:id>/delete/', todo_list_delete, name='todo_list_delete'),
     path('todos/<int:id>/edit/', todo_edit, name='todo_edit'),
     path('todos/<int:id>/delete/', todo_delete, name='todo_delete'),
+    path('todos/<int:id>/new_status/', todo_new_status, name='todo_new_status'),
 ]
 
 

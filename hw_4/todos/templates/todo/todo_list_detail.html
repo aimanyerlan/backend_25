@@ -1,74 +1,75 @@
-{% extends "base.html" %}
-{% block title %}Todo List Details{% endblock %}
+{% extends 'base.html' %}
+{% block title %}{{ todo_list.title }}{% endblock %}
 
 {% block content %}
-<h2>{{ todo_list.title }}</h2>
-<p>{{ todo_list.description }}</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>{{ todo_list.title }}</h1>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTodoModal">Добавить задачу</button>
+</div>
 
-<!-- Список задач -->
-<h3>Tasks:</h3>
+<h3>Задачи:</h3>
 <ul class="list-group">
     {% for todo in todos %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        {{ todo.title }}
-        <div>
-            <a href="{% url 'todo_edit' todo.id %}" class="btn btn-warning btn-sm">Edit</a>
-            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteTodoConfirmModal" onclick="setTodoDeleteUrl({{ todo.id }})">Delete</button>
+        <h4>{{ todo.title }}</h4>
+            <h6>{{ todo.description }}</h6>
+                <small>Срок: {{ todo.due_date }}</small><br>
+                    <form method="POST" action="{% url 'todo_new_status' todo.id %}">
+                        {% csrf_token %}
+                        <input type="checkbox" onchange="this.form.submit()" {% if todo.status %}checked{% endif %}>
+                        <label class="status-label">
+                            {% if todo.status %}Выполнено{% else %}В процессе{% endif %}
+                        </label>
+                    </form>                    
+            <a href="{% url 'todo_edit' todo.id %}" class="btn btn-outline-warning btn-sm">Изменить</a>
+            <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteTodoModal{{ todo.id }}">
+                Удалить
+            </button>
         </div>
     </li>
+
+    <div class="modal fade" id="deleteTodoModal{{ todo.id }}" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Удалить задачу?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Вы уверены, что хотите удалить задачу <strong>{{ todo.title }}</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" action="{% url 'todo_delete' todo.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% empty %}
+    <p>Нет задач</p>
     {% endfor %}
 </ul>
 
-<!-- Кнопка вызова модального окна для добавления задачи -->
-<button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addTodoModal">Добавить задачу</button>
-
-<!-- 🔹 ВОССТАНОВЛЕННОЕ МОДАЛЬНОЕ ОКНО ДЛЯ ДОБАВЛЕНИЯ TODO -->
 <div class="modal fade" id="addTodoModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Добавить задачу</h5>
+                <h5 class="modal-title">Создать задачу</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form method="post">
+                <form method="POST">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class="btn btn-success">Сохранить</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Модальное окно подтверждения удаления задачи -->
-<div class="modal fade" id="deleteTodoConfirmModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Подтверждение удаления</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                Вы уверены, что хотите удалить эту задачу?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                <a id="confirmTodoDeleteBtn" class="btn btn-danger">Удалить</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Скрипты для установки URL удаления -->
-<script>
-    function setDeleteUrl(id) {
-        document.getElementById("confirmDeleteBtn").href = `/todo-lists/${id}/delete/`;
-    }
-
-    function setTodoDeleteUrl(id) {
-        document.getElementById("confirmTodoDeleteBtn").href = `/todos/${id}/delete/`;
-    }
-</script>
 
 {% endblock %}
