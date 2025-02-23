@@ -1,5 +1,5 @@
 from django import forms
-from .models import Thread, Post
+from .models import Post, Thread
 
 class ThreadForm(forms.ModelForm):
     class Meta:
@@ -9,4 +9,4 @@ class ThreadForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'description', 'author']
+        fields = ['title', 'description', 'author', 'picture']

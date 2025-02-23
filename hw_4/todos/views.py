@@ -12,22 +12,43 @@ def todo_lists(request):
     if request.method == "POST" and form.is_valid():
         form.save()
         return redirect('todo_lists')
-
     return render(request, 'todo/todo_lists.html', {'lists': lists, 'form': form})
 
 
 def todo_list_detail(request, id):
     todo_list = get_object_or_404(TodoList, id=id)
-    todos = todo_list.todo_set.all()
+    todos = Todo.objects.filter(todo_list=todo_list)
     form = TodoForm(request.POST or None)
 
-    if request.method == "POST" and form.is_valid():
-        todo = form.save(commit=False)
-        todo.todo_list = todo_list
-        todo.save()
-        return redirect('todo_list_detail', id=id)
+    if request.method == "POST":
+        print("POST-запрос получен")  
+        if form.is_valid():
+            print("Форма валидна!")  
+            todo = form.save(commit=False)
+            todo.todo_list = todo_list
+            todo.save()
+            print("Задача сохранена!")  
+            return redirect('todo_list_detail', id=id)
+        else:
+            print("Форма НЕ валидна", form.errors)  
 
     return render(request, 'todo/todo_list_detail.html', {'todo_list': todo_list, 'todos': todos, 'form': form})
+
+# def todo_list_detail(request, id):
+#     todo_list = get_object_or_404(TodoList, id=id)
+#     todos = Todo.objects.filter(todo_list=todo_list)
+#     # todos = Todo.objects.all()
+#     # todos = todo_list.todo_set.all()
+#     form = TodoForm(request.POST or None)
+
+#     if request.method == "POST" and form.is_valid():
+#         todo = form.save(commit=False)
+#         todo.todo_list = todo_list
+#         todo.save()
+#         return redirect('todo_list_detail', id=id)
+    
+
+#     return render(request, 'todo/todo_list_detail.html', {'todo_list': todo_list, 'todos': todos, 'form': form})
 
 def todo_list_delete(request, id):
     todo_list = get_object_or_404(TodoList, id=id)

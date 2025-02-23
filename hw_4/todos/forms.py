@@ -9,5 +9,5 @@ class TodoListForm(forms.ModelForm):
 class TodoForm(forms.ModelForm):
     class Meta:
         model = Todo
-        fields = ['title', 'description', 'due_date', 'status', 'todo_list']
+        fields = ['title', 'description', 'due_date', 'status']
         

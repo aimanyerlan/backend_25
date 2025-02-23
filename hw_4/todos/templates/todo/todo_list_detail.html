@@ -62,11 +62,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form method="POST">
+                <form method="POST" action="{% url 'todo_list_detail' todo_list.id %}">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <button type="submit" class="btn btn-primary">Сохранить</button>
-                </form>
+                </form>                
             </div>
         </div>
     </div>
