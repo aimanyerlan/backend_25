@@ -1,129 +1,3 @@
-# from django.contrib.auth import authenticate, login, logout
-# from django.contrib.auth.context_processors import auth
-# from django.shortcuts import render, redirect
-# from .models import Post, Thread
-# from .forms import PostForm, ThreadForm
-# from django.contrib.auth.decorators import login_required, permission_required
-
-
-# def index_thread(request):
-#     if request.method == 'GET':
-#         form = ThreadForm()
-#         threads = Thread.objects.all()
-#         return render(request, 'post/index.html',
-#                       {
-#                         'form': form,
-#                         'threads': threads
-#                       })
-    
-#     if request.method == "POST":
-#         form = ThreadForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('/')
-        
-# @login_required 
-# @permission_required('posts.change_thread')      
-# def update_thread(request, thread_id):
-#     thread = Thread.objects.get(id=thread_id)
-#     if request.method == "GET":
-#         form = ThreadForm(instance=thread)
-#         return render(request, 'post/update_thread.html',
-#                       {
-#                         'form': form,
-#                         'thread': thread
-#                       })
-#     if request.method == 'POST':
-#         form = ThreadForm(request.POST, instance=thread)
-#         if form.is_valid():
-#             form.save()
-#         return redirect('/')
-    
-# @login_required
-# @permission_required('posts.delete_thread')
-# def delete_thread(request, thread_id):
-#     try:
-#         thread = Thread.objects.get(id=thread_id)
-#         thread.delete()
-#         return redirect('/')
-#     except Thread.DoesNotExist as e:
-#         return redirect('index')
-
-
-# def thread_details(request, thread_id):
-#     thread = Thread.objects.get(id=thread_id)
-#     if request.method == 'GET':
-#         form = PostForm()
-#         posts = Post.objects.filter(thread=thread_id)
-#         return render(request, 'post/thread_details.html',
-#                         {
-#                             'posts': posts,
-#                             'thread': thread,
-#                             'form': form
-#                         })
-#     if request.method == "POST":
-#         form = PostForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             title = form.cleaned_data.get('title')
-#             description = form.cleaned_data.get('description')
-#             author = form.cleaned_data.get('author')
-#             picture = form.cleaned_data.get('picture')
-#             post = Post(
-#                 title=title,
-#                 description=description,
-#                 author=author,
-#                 thread=Thread.objects.get(id=thread_id),
-#             )
-#             post.picture.save(picture.name, picture)
-#             post.save()
-#         return redirect('thread_details', thread_id)
-    
-# @login_required   
-# @permission_required('posts.change_post')
-# def update_post(request, thread_id, post_id):
-#     thread = Thread.objects.get(id=thread_id)
-#     post = Post.objects.get(id=post_id)
-#     if request.method == "GET":
-#         form = PostForm(instance=post)
-#         return render(request, 'post/update_post.html',
-#                         {
-#                             'post': post,
-#                             'thread': thread,
-#                             'form': form
-#                         })
-#     if request.method == "POST":
-#         form = PostForm(request.POST, request.FILES, instance=post)
-#         if form.is_valid():
-#             form.save()
-#         return redirect('thread_details', thread_id)
-    
-# @login_required    
-# @permission_required('posts.delete_post')    
-# def delete_post(request, thread_id, post_id):
-#     try:
-#         post=Post.objects.get(id=post_id)
-#         post.delete()
-#         return redirect('thread_details', thread_id)
-#     except Post.DoesNotExist as e:
-#         return redirect('index')
-
-# @login_required 
-# def log_in(request):
-#     if request.method == "POST":
-#         redirect_url = request.GET.get('next', '/')
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         user = authenticate(username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect(redirect_url)
-#         return render(request, 'auth/login.html')
-    
-# @login_required
-# def log_out(request):
-#     logout(request)
-#     return redirect('index')
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required, permission_required
@@ -167,12 +41,12 @@ def post_detail(request, id):
 @login_required
 def create_post(request):
     if request.method == "POST":
-        form = PostForm(request.POST, request.FILES)  # Не забываем request.FILES!
+        form = PostForm(request.POST, request.FILES) 
         if form.is_valid():
-            post = form.save(commit=False)  # Создаем объект, но не сохраняем
-            post.author = request.user  # Привязываем текущего пользователя
-            post.save()  # Сохраняем в базе
-            return redirect("posts_list")  # Перенаправляем после успешного создания
+            post = form.save(commit=False) 
+            post.author = request.user  
+            post.save()  
+            return redirect("posts_list") 
     else:
         form = PostForm()
     
