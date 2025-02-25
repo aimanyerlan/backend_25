@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4">All Posts</h2>
+
+    {% if posts %}
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        {% if post.picture %}
+                            <img src="{{ post.picture.url }}" class="card-img-top" alt="{{ post.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text text-muted">{{ post.description|truncatewords:20 }}</p>
+                            <p class="small text-primary">Thread: {{ post.thread.name }}</p>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            {% if post.author == user or user.is_superuser %}
+                                <a href="{% url 'post_detail' post.id %}" class="btn btn-primary btn-sm">View</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted text-center">No posts yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
