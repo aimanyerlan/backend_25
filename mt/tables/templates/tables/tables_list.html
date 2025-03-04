@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Tables{% endblock %}
+
+{% block content %}
+<h1>Tables</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Table Number</th>
+            <th scope="col">Seats</th>
+            <th scope="col">Available</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for table in tables %}
+        <tr>
+            <td>{{ table.number }}</td>
+            <td>{{ table.seats }}</td>
+            <td>{% if table.is_available %} Available {% else %} Not Available {% endif %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'create_table' %}" class="btn btn-primary">Create Table</a>
+{% endblock %}

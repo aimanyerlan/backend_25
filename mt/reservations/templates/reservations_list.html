@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Reservations List{% endblock %}
+
+{% block content %}
+{% load static %}
+<h1>Reservations List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">User</th>
+            <th scope="col">Table Number</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reservation in reservations %}
+        <tr>
+            <td>{{ reservation.user.username }}</td>
+            <td>{{ reservation.table.number }}</td>
+            <td>{{ reservation.date }}</td>
+            <td>{{ reservation.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'create_reservation' %}" class="btn btn-primary">Create Reservation</a>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Reservation Detail{% endblock %}
+
+{% block content %}
+<h1>Reservation Detail</h1>
+
+<ul class="list-group">
+    <li class="list-group-item">User: {{ reservation.user.username }}</li>
+    <li class="list-group-item">Table: {{ reservation.table.number }}</li>
+    <li class="list-group-item">Date: {{ reservation.date }}</li>
+    <li class="list-group-item">Status: {{ reservation.status }}</li>
+</ul>
+
+<a href="{% url 'update_reservation_status' reservation.id %}" class="btn btn-warning mt-3">Update Status</a>
+<a href="{% url 'delete_reservation' reservation.id %}" class="btn btn-danger mt-3">Delete Reservation</a>
+{% endblock %}
