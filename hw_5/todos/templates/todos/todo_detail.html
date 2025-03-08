@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<body>
+    <h1>Детали задачи</h1>
+
+    <p><strong>Название:</strong> {{ todo.title }}</p>
+    <p><strong>Описание:</strong> {{ todo.description }}</p>
+    <p><strong>Срок выполнения:</strong> {{ todo.due_date }}</p>
+    <p><strong>Статус:</strong> 
+        <form method="post" action="{% url 'todo_new_status' todo.id %}">
+            {% csrf_token %}
+            <input type="checkbox" onchange="this.form.submit()" {% if todo.status %}checked{% endif %}>
+            <label class="status-label">
+                {% if todo.status %}✅ Выполнено{% else %}⏳ В процессе{% endif %}
+            </label>
+        </form>
+    </p>
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'todos_list' %}" class="btn btn-light">⬅ Назад</a>
+        <a href="{% url 'delete_todo' todo.id %}" class="btn btn-danger">🗑 Удалить</a>
+    </div>
+{% endblock %}

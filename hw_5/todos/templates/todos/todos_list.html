@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Список задач{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Мои задачи</h1>
+
+    <!-- Кнопка для раскрытия формы -->
+    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#todoForm">
+        ➕ Добавить задачу
+    </button>
+
+    <!-- Форма (по умолчанию скрыта) -->
+    <div class="collapse" id="todoForm">
+        <div class="card card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Добавить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Список задач -->
+    <h2>Ваши задачи</h2>
+    <ul class="list-group">
+        {% for todo in todos %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'todo_detail' todo.id %}">{{ todo.title }}</a>
+                <span class="badge {% if todo.status %}bg-success{% else %}bg-danger{% endif %}">
+                    {% if todo.status %}✅ Выполнено{% else %}⏳ В процессе{% endif %}
+                </span>
+            </li>
+        {% empty %}
+            <p>Нет задач.</p>
+        {% endfor %}
+    </ul>
+{% endblock %}
