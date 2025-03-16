@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Заметки</h1>
+    <a href="{% url 'note_create' %}" class="btn btn-primary">Добавить заметку</a>
+    <ul>
+        {% for note in notes %}
+            <li>
+                <a href="{% url 'note_detail' note.id %}">{{ note.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
